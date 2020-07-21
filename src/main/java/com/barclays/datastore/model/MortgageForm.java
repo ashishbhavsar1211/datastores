@@ -12,7 +12,7 @@ import java.time.Period;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class MortgageForm implements Serializable, Comparable<MortgageForm> {
+public class MortgageForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -89,12 +89,6 @@ public class MortgageForm implements Serializable, Comparable<MortgageForm> {
 
     public void setOfferExpired(Boolean offerExpired) {
         this.offerExpired = offerExpired;
-    }
-
-    @Override
-    public int compareTo(MortgageForm o) {
-        Period period = Period.between(this.getOfferDate(), o.getOfferDate());
-        return period.getDays();
     }
 
     public static final Comparator<MortgageForm> offerDateComparator = new Comparator<MortgageForm>() {

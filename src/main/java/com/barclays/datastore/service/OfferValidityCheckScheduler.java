@@ -16,13 +16,14 @@ public class OfferValidityCheckScheduler {
 
     @Autowired
     private StoreMortgageAppDataService storeMortgageAppDataService;
+
     @Scheduled(cron = "0 0 0 * * ?")
     public void scheduleTaskWithCronExpression() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
         String strDate = sdf.format(now);
         logger.info("Daily Scheduler Started:" + strDate  );
-        //TODO
         storeMortgageAppDataService.updateOfferExpiredAppData();
+        logger.info("Job executed.");
     }
 }

@@ -2,6 +2,7 @@ package com.barclays.datastore.controller;
 
 
 import com.barclays.datastore.model.MortgageForm;
+import com.barclays.datastore.model.Mortgagelist;
 import com.barclays.datastore.service.StoreMortgageAppDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedList;
 
 @RestController
 @RequestMapping("/datastore")
@@ -26,14 +26,15 @@ public class DatastoreController {
     }
 
     @GetMapping(value = "/getMortgage", produces = "application/json")
-    public LinkedList<MortgageForm> getAllForms() {
-
-        return storeMortgageAppDataService.fetchMortgageApp();
+    public Mortgagelist getAllForms() {
+        Mortgagelist mortgagelist = new Mortgagelist();
+        mortgagelist.setMortgageFormList(storeMortgageAppDataService.fetchMortgageApp());
+        return mortgagelist;
     }
 
     @GetMapping(value = "/getMortgageById/{id}", produces = "application/json")
     public ResponseEntity<MortgageForm> getMortgageById(@PathVariable("id") String id) {
-        storeMortgageAppDataService.getById(id);
-        return new ResponseEntity<MortgageForm>(HttpStatus.OK);
+        MortgageForm mfById = storeMortgageAppDataService.getById(id);
+        return new ResponseEntity<MortgageForm>(mfById,HttpStatus.OK);
     }
 }
