@@ -9,6 +9,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Comparator;
+import java.util.Objects;
 
 public class MortgageForm implements Serializable, Comparable<MortgageForm> {
 
@@ -93,5 +95,30 @@ public class MortgageForm implements Serializable, Comparable<MortgageForm> {
     public int compareTo(MortgageForm o) {
         Period period = Period.between(this.getOfferDate(), o.getOfferDate());
         return period.getDays();
+    }
+
+    public static final Comparator<MortgageForm> offerDateComparator = new Comparator<MortgageForm>() {
+        @Override
+        public int compare(MortgageForm o1, MortgageForm o2) {
+            return o1.offerDate.compareTo(o2.offerDate);
+        }
+    };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MortgageForm that = (MortgageForm) o;
+        return mortgageId.equals(that.mortgageId) &&
+                version.equals(that.version) &&
+                offerId.equals(that.offerId) &&
+                offerDate.equals(that.offerDate) &&
+                Objects.equals(CreatedDate, that.CreatedDate) &&
+                Objects.equals(offerExpired, that.offerExpired);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mortgageId, version, offerId, offerDate, CreatedDate, offerExpired);
     }
 }
