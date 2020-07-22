@@ -18,8 +18,11 @@ public class StoreMortgageAppDataService {
 
     private static final Logger logger = LoggerFactory.getLogger(StoreMortgageAppDataService.class);
 
-    LinkedList<MortgageForm> mortgageFormsLists = new LinkedList<>();
+    private LinkedList<MortgageForm> mortgageFormsLists ;
 
+    public StoreMortgageAppDataService(LinkedList<MortgageForm> mortgageFormLinkedList) {
+        this.mortgageFormsLists = mortgageFormLinkedList;
+    }
 
     public void storeMortgageData(MortgageForm mortgageForm) {
         ListIterator<MortgageForm> mortgageFormListIterator = mortgageFormsLists.listIterator();
@@ -69,11 +72,10 @@ public class StoreMortgageAppDataService {
         logger.info("Job started-->");
         ListIterator<MortgageForm> mortgageFormListIterator = mortgageFormsLists.listIterator();
         while (mortgageFormListIterator.hasNext()) {
-            long days = ChronoUnit.DAYS.between(LocalDate.now(),
-                    mortgageFormListIterator.next().getOfferDate());
-            if (days > 0) {
-                mortgageFormListIterator.next().setOfferExpired(true);
-                logger.info("OfferExpired updated for MortgageId"+mortgageFormListIterator.next().getMortgageId());
+            MortgageForm nextMf = mortgageFormListIterator.next();
+            if(LocalDate.now().compareTo(nextMf.getOfferDate()) >= 1){
+                nextMf.setOfferExpired(true);
+                logger.info("OfferExpired updated for MortgageId:"+nextMf.getMortgageId());
             }
         }
     }

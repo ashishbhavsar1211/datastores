@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,7 +19,7 @@ public class OfferValidityCheckScheduler {
     private StoreMortgageAppDataService storeMortgageAppDataService;
 
     @Scheduled(cron = "0 0 0 * * ?")
-    public void scheduleTaskWithCronExpression() {
+    public void scheduleTaskWithCronExpression() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
         String strDate = sdf.format(now);

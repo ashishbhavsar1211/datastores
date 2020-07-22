@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Objects;
 
 public class MortgageForm implements Serializable {
@@ -30,6 +31,8 @@ public class MortgageForm implements Serializable {
     private LocalDate CreatedDate;
 
     private Boolean offerExpired;
+
+    private Date temdate;
 
     @Override
     public String toString() {
@@ -89,6 +92,14 @@ public class MortgageForm implements Serializable {
 
     public void setOfferExpired(Boolean offerExpired) {
         this.offerExpired = offerExpired;
+    }
+
+    public Date getTemdate() {
+        return temdate;
+    }
+
+    public void setTemdate(Date temdate) {
+        this.temdate = temdate;
     }
 
     public static final Comparator<MortgageForm> offerDateComparator = new Comparator<MortgageForm>() {
