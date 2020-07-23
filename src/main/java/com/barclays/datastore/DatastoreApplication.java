@@ -13,4 +13,5 @@ public class DatastoreApplication extends SpringBootServletInitializer {
 		SpringApplication.run(DatastoreApplication.class, args);
 	}
 
+
 }

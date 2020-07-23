@@ -73,7 +73,8 @@ public class StoreMortgageAppDataService {
         ListIterator<MortgageForm> mortgageFormListIterator = mortgageFormsLists.listIterator();
         while (mortgageFormListIterator.hasNext()) {
             MortgageForm nextMf = mortgageFormListIterator.next();
-            if(LocalDate.now().compareTo(nextMf.getOfferDate()) >= 1){
+            long period = ChronoUnit.DAYS.between(LocalDate.now(),nextMf.getOfferDate());
+            if(period <= 0){
                 nextMf.setOfferExpired(true);
                 logger.info("OfferExpired updated for MortgageId:"+nextMf.getMortgageId());
             }
